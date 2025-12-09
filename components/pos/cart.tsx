@@ -14,7 +14,8 @@ interface CartProps {
 export function Cart({ items, onRemoveItem, onUpdateQuantity }: CartProps) {
   const [clientDNI, setClientDNI] = useState("")
 
-  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  // CORRECCIÓN 1: Usamos 'salePrice' en lugar de 'price'
+  const subtotal = items.reduce((sum, item) => sum + (item.salePrice || 0) * item.quantity, 0)
   const tax = subtotal * 0.18
   const total = subtotal + tax
 
@@ -44,7 +45,10 @@ export function Cart({ items, onRemoveItem, onUpdateQuantity }: CartProps) {
               <div className="flex justify-between items-start mb-2">
                 <div className="flex-1">
                   <p className="font-semibold text-sm text-slate-900 dark:text-white line-clamp-1">{item.name}</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">${item.price.toFixed(2)} c/u</p>
+                  {/* CORRECCIÓN 2: Usamos item.salePrice */}
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    ${(item.salePrice || 0).toFixed(2)} c/u
+                  </p>
                 </div>
                 <button
                   onClick={() => onRemoveItem(item.id)}
@@ -70,7 +74,10 @@ export function Cart({ items, onRemoveItem, onUpdateQuantity }: CartProps) {
                     <Plus size={14} />
                   </button>
                 </div>
-                <span className="font-bold text-sm text-primary">${(item.price * item.quantity).toFixed(2)}</span>
+                {/* CORRECCIÓN 3: Usamos item.salePrice para el total del item */}
+                <span className="font-bold text-sm text-primary">
+                  ${((item.salePrice || 0) * item.quantity).toFixed(2)}
+                </span>
               </div>
             </div>
           ))
@@ -87,7 +94,7 @@ export function Cart({ items, onRemoveItem, onUpdateQuantity }: CartProps) {
           type="text"
           placeholder="12345678 o 20123456789"
           value={clientDNI}
-          onChange={(e) => setClientDNI(e.target.value)}
+          onChange={(e) => setClientDNI(e.target.value)} // Nota: Falta pasar esto al padre para enviarlo al backend
           className="text-sm"
         />
       </div>
@@ -110,8 +117,20 @@ export function Cart({ items, onRemoveItem, onUpdateQuantity }: CartProps) {
 
       {/* Action Button */}
       <div className="border-t border-slate-200 dark:border-slate-700 px-4 py-4">
+        {/* Nota: En el paso anterior definiste handleCheckout en page.tsx, este botón necesita llamar a esa función. 
+            Como este componente es solo visual (UI), el evento onClick debe venir desde props o el botón estar fuera.
+            
+            Para que funcione rápido con tu código actual de page.tsx, el botón de 'Pagar' 
+            está siendo renderizado en page.tsx, NO aquí dentro. 
+            
+            Si estás usando este Cart dentro de page.tsx como <Cart ... />, asegúrate de que el botón de pago 
+            esté donde corresponde.
+            
+            En el código que me mostraste antes de page.tsx, el botón de pago ESTABA fuera del componente Cart.
+            Si este archivo cart.tsx incluye el botón, asegúrate de pasarle la función `onCheckout` como prop.
+        */}
         <Button className="w-full text-lg h-12 font-bold" disabled={items.length === 0}>
-          Procesar Pago
+          Procesar Pago (Visual)
         </Button>
       </div>
     </div>

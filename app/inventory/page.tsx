@@ -26,21 +26,6 @@ export default function InventoryPage() {
                 Gestiona lotes, vencimientos y niveles de stock
               </p>
             </div>
-
-            <div className="flex gap-2">
-              <Button variant="outline" size="sm">
-                <Download size={18} className="mr-2" />
-                Exportar
-              </Button>
-              <Button variant="outline" size="sm">
-                <Upload size={18} className="mr-2" />
-                Importar
-              </Button>
-              <Button onClick={() => setShowAddProduct(true)}>
-                <Plus size={18} className="mr-2" />
-                Nuevo Producto
-              </Button>
-            </div>
           </div>
 
           {/* Table */}
