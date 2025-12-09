@@ -1,3 +1,5 @@
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api";
+
 export interface Batch {
   id: number;
   batchCode: string;
@@ -13,8 +15,8 @@ export interface Product {
   barcode?: string;
   salePrice: number;
   minStock: number;
-  provider?: string; 
+  provider?: string;
   batches?: Batch[];
-  totalStock?: number; 
-  nearestBatch?: Batch; 
+  totalStock?: number;
+  nearestBatch?: Batch;
 }

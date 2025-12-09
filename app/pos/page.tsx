@@ -1,30 +1,30 @@
 "use client"
 
+import { API_URL } from "@/types/api"
 import { useState } from "react"
 import { Sidebar } from "@/components/sidebar"
 import { ProductGrid } from "@/components/pos/product-grid"
 import { Cart } from "@/components/pos/cart"
-import { SearchBar } from "@/components/pos/search-bar"
 import { Header } from "@/components/pos/header"
-import { Button } from "@/components/ui/button" 
 import { Input } from "@/components/ui/input"
-import { useToast } from "@/components/ui/use-toast" // Asegúrate de tener shadcn toast o usa alert simple
+import { Search } from "lucide-react"
+import { CheckoutDialog } from "@/components/pos/checkout-dialog" // Importar el modal nuevo
 
 export default function POSPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [cartItems, setCartItems] = useState<any[]>([])
-  const [clientDni, setClientDni] = useState("99999999") // DNI Público General por defecto
+  
+  // Estados para el Modal de Pago
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
-  const { toast } = useToast()
 
+  // --- LÓGICA CARRITO ---
   const addToCart = (product: any) => {
     const existingItem = cartItems.find((item) => item.id === product.id)
-    // Validar stock antes de agregar
     if (existingItem && existingItem.quantity >= product.stock) {
-        alert("¡No hay suficiente stock!")
+        alert("Stock insuficiente")
         return
     }
-
     if (existingItem) {
       setCartItems(cartItems.map((item) => (item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item)))
     } else {
@@ -32,32 +32,33 @@ export default function POSPage() {
     }
   }
 
-  const removeFromCart = (productId: string) => {
+  const removeFromCart = (productId: number) => {
     setCartItems(cartItems.filter((item) => item.id !== productId))
   }
 
-  const updateQuantity = (productId: string, quantity: number) => {
+  const updateQuantity = (productId: number, quantity: number) => {
     if (quantity <= 0) {
       removeFromCart(productId)
     } else {
-      // Validar stock máximo
       const item = cartItems.find(i => i.id === productId);
+      // Validar stock del item original (esto requeriría buscar en la lista de productos, 
+      // pero por simplicidad validamos contra lo que ya tiene el item si trajimos el stock)
       if(item && quantity > item.stock) {
-          alert("Stock insuficiente")
+          alert("Stock máximo alcanzado")
           return;
       }
       setCartItems(cartItems.map((item) => (item.id === productId ? { ...item, quantity } : item)))
     }
   }
 
-  // --- LÓGICA DE PAGO CON BACKEND ---
-  const handleCheckout = async () => {
-    if (cartItems.length === 0) return;
+  // --- LÓGICA DE PAGO (API) ---
+  const handleConfirmSale = async (clientData: { dni: string, name: string }) => {
     setIsProcessing(true);
 
     const salePayload = {
-        clientDni: clientDni,
-        sellerId: 1, // Hardcodeado por ahora
+        clientDni: clientData.dni,
+        clientName: clientData.name,
+        sellerId: 1, 
         items: cartItems.map(item => ({
             productId: item.id,
             quantity: item.quantity
@@ -65,7 +66,7 @@ export default function POSPage() {
     };
 
     try {
-        const response = await fetch("http://localhost:8080/api/sales", {
+        const response = await fetch(`${API_URL}/sales`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(salePayload)
@@ -76,14 +77,13 @@ export default function POSPage() {
             throw new Error(errorData.message || "Error al procesar venta");
         }
 
-        // Éxito
         const sale = await response.json();
-        alert(`¡Venta realizada con éxito! ID: ${sale.id} - Total: $${sale.total}`);
-        setCartItems([]); // Limpiar carrito
-        setClientDni(""); // Limpiar cliente
+        alert(`¡Venta #${sale.id} Exitosa!`);
         
-        // Aquí idealmente recargarías los productos para ver el stock actualizado
-        window.location.reload(); 
+        // Limpieza
+        setCartItems([]);
+        setIsCheckoutOpen(false); // Cerrar modal
+        window.location.reload(); // Recargar para actualizar stocks
 
     } catch (error: any) {
         alert(`Error: ${error.message}`);
@@ -92,45 +92,54 @@ export default function POSPage() {
     }
   }
 
+  // Calcular total para pasarlo al modal
+  const totalAmount = cartItems.reduce((acc, item) => acc + ((item.salePrice || 0) * item.quantity), 0) * 1.18;
+
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-background overflow-hidden">
       <Sidebar />
 
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col h-full overflow-hidden">
         <Header title="Punto de Venta" />
 
-        <div className="flex-1 flex gap-6 overflow-hidden p-6">
-          {/* Left: Products */}
-          <div className="flex-1 flex flex-col">
-            <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <div className="flex-1 flex gap-4 overflow-hidden p-4 h-full">
+          
+          {/* IZQUIERDA: PRODUCTOS (Ocupa el espacio restante) */}
+          <div className="flex-1 flex flex-col h-full overflow-hidden bg-slate-50/50 rounded-lg p-2">
+            {/* Barra de búsqueda integrada arriba */}
+            <div className="relative mb-4">
+               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={18} />
+               <Input 
+                 placeholder="Buscar por nombre o código (ESC para limpiar)..." 
+                 value={searchQuery} 
+                 onChange={(e) => setSearchQuery(e.target.value)}
+                 className="pl-10 bg-white"
+               />
+            </div>
+            
             <ProductGrid searchQuery={searchQuery} onAddToCart={addToCart} />
           </div>
 
-          {/* Right: Cart */}
-          <div className="w-96 flex flex-col gap-4 bg-white dark:bg-slate-900 p-4 rounded-lg border h-full">
-            <div className="flex gap-2 mb-2">
-                <Input 
-                    placeholder="DNI / RUC Cliente" 
-                    value={clientDni} 
-                    onChange={(e) => setClientDni(e.target.value)}
-                />
-            </div>
-            
-            <div className="flex-1 overflow-auto">
-                <Cart items={cartItems} onRemoveItem={removeFromCart} onUpdateQuantity={updateQuantity} />
-            </div>
-
-            <Button 
-                size="lg" 
-                className="w-full text-lg py-6" 
-                onClick={handleCheckout}
-                disabled={cartItems.length === 0 || isProcessing}
-            >
-                {isProcessing ? "Procesando..." : "PAGAR AHORA"}
-            </Button>
+          {/* DERECHA: CARRITO (Ancho fijo, altura completa) */}
+          <div className="w-[380px] shrink-0 h-full">
+            <Cart 
+                items={cartItems} 
+                onRemoveItem={removeFromCart} 
+                onUpdateQuantity={updateQuantity} 
+                onCheckoutClick={() => setIsCheckoutOpen(true)}
+            />
           </div>
         </div>
       </div>
+
+      {/* MODAL DE PAGO (Se renderiza encima de todo) */}
+      <CheckoutDialog 
+        open={isCheckoutOpen} 
+        onOpenChange={setIsCheckoutOpen}
+        totalAmount={totalAmount}
+        onConfirmSale={handleConfirmSale}
+        isProcessing={isProcessing}
+      />
     </div>
   )
 }
