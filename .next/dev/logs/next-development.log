@@ -1,39 +1,15 @@
-[00:00:01.291] Server  LOG      ✓ Ready in 846ms
-[00:00:05.721] Server  LOG      ○ Compiling / ...
-[00:00:07.846] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:08.856] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:00:08.856] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:00:08.856] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765260465830}
-[00:00:11.963] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/inventory color: rgb(120, 120, 120) color: inherit {"dp":"/inventory","o":"http://localhost:3000/inventory","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765260469750}
-[00:00:53.365] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:00:53.365] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:03:49.212] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:03:49.212] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:04:24.503] Server  LOG      ✓ Compiled in 160ms
-[00:04:30.572] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:04:30.572] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:04:35.235] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:04:35.235] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:04:42.689] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:04:42.689] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:04:51.382] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:04:51.382] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:04:56.465] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:04:56.465] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:05:31.399] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:05:31.400] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:05:41.063] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:05:41.063] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:05:55.986] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/pos color: rgb(120, 120, 120) color: inherit {"dp":"/pos","o":"http://localhost:3000/pos","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765260813756}
-[00:06:08.003] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/inventory color: rgb(120, 120, 120) color: inherit {"dp":"/inventory","o":"http://localhost:3000/inventory","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765260825787}
-[00:06:28.747] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:06:28.747] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:07:37.843] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/pos color: rgb(120, 120, 120) color: inherit {"dp":"/pos","o":"http://localhost:3000/pos","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765260915638}
-[00:07:40.052] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765260917839}
-[00:07:46.377] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/inventory color: rgb(120, 120, 120) color: inherit {"dp":"/inventory","o":"http://localhost:3000/inventory","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765260924167}
-[00:08:03.621] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:08:03.825] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:08:03.825] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/inventory","route":"/inventory"}
-[00:08:03.825] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/inventory color: rgb(120, 120, 120) color: inherit {"dp":"/inventory","o":"http://localhost:3000/inventory","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765260941621}
-[00:08:09.199] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:08:09.199] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[00:00:01.634] Server  LOG      ✓ Ready in 1198ms
+[00:00:12.476] Server  LOG      ○ Compiling / ...
+[00:00:14.550] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:14.744] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:14.744] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:00:14.744] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765290172980}
+[00:00:27.161] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/inventory color: rgb(120, 120, 120) color: inherit {"dp":"/inventory","o":"http://localhost:3000/inventory","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765290185384}
+[00:00:33.526] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/pos color: rgb(120, 120, 120) color: inherit {"dp":"/pos","o":"http://localhost:3000/pos","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765290191759}
+[00:00:40.483] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:40.662] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:40.662] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/pos","route":"/pos"}
+[00:00:40.662] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/pos color: rgb(120, 120, 120) color: inherit {"dp":"/pos","o":"http://localhost:3000/pos","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765290198903}
+[00:00:42.650] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/inventory color: rgb(120, 120, 120) color: inherit {"dp":"/inventory","o":"http://localhost:3000/inventory","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765290200875}
+[00:00:46.806] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[00:00:46.806] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
