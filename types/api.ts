@@ -20,3 +20,11 @@ export interface Product {
   totalStock?: number;
   nearestBatch?: Batch;
 }
+
+export interface User {
+  id: number;
+  username: string;
+  fullName: string;
+  role: "ADMIN" | "SELLER";
+  password?: string; 
+}

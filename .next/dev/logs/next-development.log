@@ -1,25 +1,8 @@
-[00:00:00.897] Server  LOG      ✓ Ready in 561ms
-[00:00:06.402] Server  ERROR    ⨯ ./app
-Font file not found: Can't resolve './fonts/GeistMonoVF.woff'
-
-
-./app
-Font file not found: Can't resolve './fonts/GeistVF.woff'
-
-[00:00:08.139] Browser ERROR   uncaughtError: Error: ./app
-Font file not found: Can't resolve './fonts/GeistMonoVF.woff'
-
-[00:00:08.139] Browser ERROR   ./app
-Font file not found: Can't resolve './fonts/GeistMonoVF.woff'
-[00:00:08.139] Browser ERROR   ./app
-Font file not found: Can't resolve './fonts/GeistVF.woff'
-[00:00:08.659] Browser ERROR   ./app
-Font file not found: Can't resolve './fonts/GeistMonoVF.woff'
-[00:00:08.659] Browser ERROR   ./app
-Font file not found: Can't resolve './fonts/GeistVF.woff'
-[00:03:26.926] Server  LOG      ✓ Compiled in 1089ms
-[00:03:27.712] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:03:35.867] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:03:42.812] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:03:46.679] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:03:53.884] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:01.142] Server  LOG      ✓ Ready in 759ms
+[00:00:06.349] Server  LOG      ○ Compiling / ...
+[00:00:09.265] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:10:03.112] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:10:51.713] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:10:51.901] Browser ERROR   Error cargando reportes {}
+[00:10:58.024] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:13:08.977] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold

@@ -17,8 +17,9 @@ export function Sidebar() {
     // SOLO ADMIN VE INVENTARIO Y REPORTES
     ...(user?.role === "ADMIN" ? [
       { label: "Inventario", icon: Package, href: "/inventory" },
+      { label: "Usuarios", icon: Users, href: "/users" }, // <--- NUEVO ENLACE (Asegúrate de importar Users de lucide-react)
       { label: "Reportes", icon: BarChart3, href: "/reports" },
-      { label: "Clientes", icon: Users, href: "/customers" },
+      // { label: "Clientes", icon: Users, href: "/customers" }, // (Puedes comentar este si no lo usas aún)
     ] : [])
   ]
 
