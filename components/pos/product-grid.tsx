@@ -1,11 +1,10 @@
 "use client"
 
-import { API_URL } from "@/types/api"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Plus, RefreshCw } from "lucide-react"
-import { Product } from "@/types/api"
+import { Product, API_URL } from "@/types/api"
 
 interface ProductGridProps {
   searchQuery: string
@@ -19,17 +18,30 @@ export function ProductGrid({ searchQuery, onAddToCart }: ProductGridProps) {
   const fetchProducts = async () => {
     setLoading(true)
     try {
-      const response = await fetch(`${API_URL}/products`)
+      const token = localStorage.getItem("token")
+      const response = await fetch(`${API_URL}/products`, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      })
+
       if (response.ok) {
         const data = await response.json()
         const processed = data.map((p: Product) => ({
           ...p,
-          // CORRECCIÓN: Usamos 'totalStock' para coincidir con la interfaz Product
+          // Usamos 'totalStock' para coincidir con la interfaz Product
           totalStock: p.batches?.reduce((sum, b) => sum + b.stock, 0) || 0
         }))
         setProducts(processed)
+      } else {
+        console.error("Error al cargar productos: Acceso denegado o error de servidor")
       }
-    } catch (error) { console.error(error) } finally { setLoading(false) }
+    } catch (error) { 
+      console.error(error) 
+    } finally { 
+      setLoading(false) 
+    }
   }
 
   useEffect(() => { fetchProducts() }, [])
@@ -68,7 +80,7 @@ export function ProductGrid({ searchQuery, onAddToCart }: ProductGridProps) {
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
                 {filteredProducts.map((product) => {
-                    // CORRECCIÓN: Leemos totalStock de forma segura
+                    // Leemos totalStock de forma segura
                     const currentStock = product.totalStock || 0;
 
                     return (
@@ -109,7 +121,7 @@ export function ProductGrid({ searchQuery, onAddToCart }: ProductGridProps) {
                             <Button 
                                 size="sm" 
                                 className="h-9 w-9 p-0 rounded-full shadow-sm bg-slate-900 hover:bg-blue-600 dark:bg-slate-700 dark:hover:bg-blue-500 transition-all" 
-                                // CORRECCIÓN: Enviamos 'stock' explícitamente al carrito para que lo valide
+                                // Enviamos 'stock' explícitamente al carrito para que lo valide
                                 onClick={() => onAddToCart({ ...product, stock: currentStock })} 
                                 disabled={currentStock <= 0}
                             >

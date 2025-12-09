@@ -1,11 +1,11 @@
 "use client"
-import { API_URL } from "@/types/api" 
+
 import { useState, useEffect, useRef } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Edit2, Trash2, Search, Download, Upload, Plus } from "lucide-react"
-import { Product, Batch } from "@/types/api"
+import { Product, API_URL } from "@/types/api"
 import { ProductDialog } from "./product-dialog"
 
 export function InventoryTable() {
@@ -24,7 +24,14 @@ export function InventoryTable() {
   const fetchProducts = async () => {
     setLoading(true)
     try {
-      const response = await fetch(`${API_URL}/products`)
+      const token = localStorage.getItem("token")
+      const response = await fetch(`${API_URL}/products`, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      })
+
       if (response.ok) {
         const data = await response.json()
         
@@ -46,6 +53,8 @@ export function InventoryTable() {
           };
         })
         setProducts(processed)
+      } else {
+        console.error("Error al cargar productos: No autorizado")
       }
     } catch (error) { console.error(error) } 
     finally { setLoading(false) }
@@ -53,7 +62,7 @@ export function InventoryTable() {
 
   useEffect(() => { fetchProducts() }, [])
 
-  // --- LÓGICA EXPORTAR CSV (RESTAURADA) ---
+  // --- LÓGICA EXPORTAR CSV ---
   const handleExport = () => {
     // Definir cabeceras
     const headers = ["ID,Nombre,SKU,Precio,Stock Total,Stock Minimo,Proveedor"]
@@ -87,9 +96,14 @@ export function InventoryTable() {
     reader.onload = async (evt) => {
       try {
         const importedData = JSON.parse(evt.target?.result as string)
-        const response = await fetch("http://localhost:8080/api/products/import", {
+        const token = localStorage.getItem("token")
+        
+        const response = await fetch(`${API_URL}/products/import`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}` 
+            },
             body: JSON.stringify(importedData)
         })
         
@@ -97,7 +111,7 @@ export function InventoryTable() {
             alert("¡Productos importados con éxito!")
             fetchProducts()
         } else {
-            alert("Error al importar. Formato incorrecto.")
+            alert("Error al importar. Formato incorrecto o sin permisos.")
         }
       } catch (error) {
         alert("Error leyendo el archivo JSON.")
@@ -110,7 +124,11 @@ export function InventoryTable() {
   const handleDelete = async (id: number) => {
     if (!confirm("¿Estás seguro de eliminar este producto?")) return
     try {
-        await fetch(`http://localhost:8080/api/products/${id}`, { method: "DELETE" })
+        const token = localStorage.getItem("token")
+        await fetch(`${API_URL}/products/${id}`, { 
+            method: "DELETE",
+            headers: { "Authorization": `Bearer ${token}` }
+        })
         fetchProducts() // Recargar lista
     } catch (error) { alert("Error al eliminar") }
   }
@@ -119,20 +137,24 @@ export function InventoryTable() {
   const handleSaveProduct = async (productData: any) => {
     const method = productToEdit ? "PUT" : "POST"
     const url = productToEdit 
-        ? `http://localhost:8080/api/products/${productToEdit.id}` 
-        : "http://localhost:8080/api/products"
+        ? `${API_URL}/products/${productToEdit.id}` 
+        : `${API_URL}/products`
 
     try {
+        const token = localStorage.getItem("token")
         const res = await fetch(url, {
             method,
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}` 
+            },
             body: JSON.stringify(productData)
         })
         if (res.ok) {
             setIsModalOpen(false)
             fetchProducts()
         } else {
-            alert("Error al guardar")
+            alert("Error al guardar: Verifica tus permisos o datos")
         }
     } catch (e) { console.error(e) }
   }
@@ -175,7 +197,6 @@ export function InventoryTable() {
                 <Upload size={16} className="mr-2" /> Importar
             </Button>
             
-            {/* BOTÓN EXPORTAR RESTAURADO */}
             <Button variant="outline" onClick={handleExport}>
                 <Download size={16} className="mr-2" /> Exportar
             </Button>
