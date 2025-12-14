@@ -32,8 +32,9 @@ export default function LoginPage() {
 
       const data = await res.json()
       
-      // Guardamos sesión usando el Context
+      // Guardamos sesión incluyendo el ID que viene del backend
       login(data.token, {
+        id: data.id, // <--- GUARDAR EL ID
         username: username,
         fullName: data.fullName,
         role: data.role
@@ -54,7 +55,7 @@ export default function LoginPage() {
           <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-blue-100 text-blue-600 mb-2">
             <Lock size={24} />
           </div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">FarmaSystem</h1>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Botiquin Antonia</h1>
           <p className="text-sm text-slate-500">Ingresa tus credenciales para acceder</p>
         </div>
 

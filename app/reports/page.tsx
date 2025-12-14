@@ -1,6 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import { useAuth } from "@/context/auth-context" // <--- Importar Auth
 import { Sidebar } from "@/components/sidebar"
 import { KpiCards } from "@/components/reports/kpi-cards"
 import { SalesChart } from "@/components/reports/sales-chart"
@@ -8,12 +10,25 @@ import { API_URL } from "@/types/api"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function ReportsPage() {
+  const { user } = useAuth() // <--- Obtener usuario
+  const router = useRouter()
+  
   const [kpiData, setKpiData] = useState<any>(null)
   const [chartData, setChartData] = useState<any[]>([])
   const [topProducts, setTopProducts] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
+  // 1. PROTECCIÓN DE RUTA
   useEffect(() => {
+    if (user && user.role !== "ADMIN") {
+      router.push("/pos")
+    }
+  }, [user, router])
+
+  // 2. CARGA DE DATOS (Solo si es admin)
+  useEffect(() => {
+    if (user?.role !== "ADMIN") return; // No cargar si no es admin
+
     const fetchData = async () => {
       const token = localStorage.getItem("token")
       const headers = { "Authorization": `Bearer ${token}` }
@@ -37,7 +52,10 @@ export default function ReportsPage() {
     }
 
     fetchData()
-  }, [])
+  }, [user]) // Se ejecuta cuando el usuario carga
+
+  // Bloqueo visual mientras redirige
+  if (!user || user.role !== "ADMIN") return null;
 
   return (
     <div className="flex h-screen bg-background">
@@ -49,16 +67,13 @@ export default function ReportsPage() {
             <div className="text-center p-10">Cargando datos...</div>
         ) : (
             <>
-                {/* 1. KPIs */}
                 {kpiData && <KpiCards data={kpiData} />}
 
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-                    {/* 2. Gráfico Principal (Ocupa 4 columnas) */}
                     <div className="col-span-4">
                         <SalesChart data={chartData} />
                     </div>
 
-                    {/* 3. Top Productos (Ocupa 3 columnas) */}
                     <Card className="col-span-3">
                         <CardHeader>
                             <CardTitle>Top 5 Productos Vendidos</CardTitle>

@@ -1,5 +1,5 @@
 "use client"
-
+import { useToast } from "@/hooks/use-toast"
 import { useState, useEffect, useRef } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -9,6 +9,7 @@ import { Product, API_URL } from "@/types/api"
 import { ProductDialog } from "./product-dialog"
 
 export function InventoryTable() {
+  const { toast } = useToast()
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState("")
@@ -150,13 +151,29 @@ export function InventoryTable() {
             },
             body: JSON.stringify(productData)
         })
+
         if (res.ok) {
             setIsModalOpen(false)
-            fetchProducts()
+            await fetchProducts() // <--- ¡Esto ahora sí se ejecutará!
+            
+            toast({
+                title: "Éxito",
+                description: "Producto guardado correctamente",
+                className: "bg-green-500 text-white"
+            })
         } else {
-            alert("Error al guardar: Verifica tus permisos o datos")
+            // Si falla, mostramos el mensaje real del backend
+            const errorText = await res.text()
+            toast({
+                title: "Error",
+                description: errorText || "Error al guardar producto",
+                variant: "destructive"
+            })
         }
-    } catch (e) { console.error(e) }
+    } catch (e) { 
+        console.error(e)
+        toast({ title: "Error de red", description: "No se pudo conectar", variant: "destructive" })
+    }
   }
 
   const filteredData = products.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()))

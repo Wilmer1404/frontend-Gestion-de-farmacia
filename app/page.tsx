@@ -54,7 +54,7 @@ export default function Home() {
                 <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-teal-600 rounded-lg flex items-center justify-center">
                   <Package className="text-white" size={24} />
                 </div>
-                PharmaCare
+                Botiquin Antonia
               </h1>
               <p className="text-slate-600 dark:text-slate-400 mt-1">Sistema de Gestión Integral de Farmacia</p>
             </div>

@@ -3,10 +3,12 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react"
 import { useRouter, usePathname } from "next/navigation"
 
+// 1. ACTUALIZAMOS LA INTERFAZ
 interface User {
-  username: string
-  fullName: string
-  role: "ADMIN" | "SELLER"
+  id: number; // <--- AGREGAR ESTO
+  username: string;
+  fullName: string;
+  role: "ADMIN" | "SELLER";
 }
 
 interface AuthContextType {
@@ -25,7 +27,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter()
   const pathname = usePathname()
 
-  // Cargar sesión al iniciar (si existe en localStorage)
   useEffect(() => {
     const storedToken = localStorage.getItem("token")
     const storedUser = localStorage.getItem("user")
@@ -34,7 +35,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setToken(storedToken)
       setUser(JSON.parse(storedUser))
     } else if (pathname !== "/login") {
-        // Si no hay token y no estamos en login, redirigir
         router.push("/login")
     }
   }, [])

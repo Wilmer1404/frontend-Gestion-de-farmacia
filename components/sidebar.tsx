@@ -36,8 +36,8 @@ export function Sidebar() {
             <Package className="text-white" size={24} />
           </div>
           <div>
-            <h1 className="font-bold text-slate-900 dark:text-white text-lg leading-none">FarmaSystem</h1>
-            <p className="text-xs text-slate-500 mt-1">v1.0 Pro</p>
+            <h1 className="font-bold text-slate-900 dark:text-white text-lg leading-none">Botiquin Antonia</h1>
+            <p className="text-xs text-slate-500 mt-1">v1</p>
           </div>
         </div>
         

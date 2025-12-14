@@ -24,7 +24,51 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # local env files
-.env*.local
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# API keys and secrets
+config/secrets.json
+config/keys.json
+*.key
+*.pem
+*.p12
+*.crt
+*.cer
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+database.json
+
+# Logs with sensitive info
+*.log
+logs/
+log/
+
+# IDEs
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Backup files
+*.backup
+*.bak
+*.tmp
 
 # vercel
 .vercel
